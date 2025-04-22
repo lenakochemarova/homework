@@ -1,36 +1,34 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HomeWork {
 
-    public static List<Double> getRollingAverage(ArrayList<Integer> arr, int k) {
-        LinkedList<Integer> linkedList = new LinkedList<>();
-        ArrayList<Double> res = new ArrayList<>();
-
-        for (int i = 0; i < k; i++) {
-            linkedList.add(arr.get(i));
-        }
-        addAverageToList(linkedList, res);
-        for (int i = k; i < arr.size(); i++) {
-            linkedList.add(arr.get(i));
-            linkedList.remove();
-            addAverageToList(linkedList, res);
-        }
+    public static <T> List<T> deleteDuplicates(List<T> list) {
+        List<T> res = list.stream()
+                .distinct()
+                .collect(Collectors.toList());
         return res;
     }
 
-    public static void addAverageToList(List<Integer> arr, List<Double> res) {
-        int sum = 0;
-        for (Integer integer : arr) {
-            sum += integer;
-        }
-        res.add((double) sum / arr.size());
+    public static long count(List<String> list, char c) {
+        long res = list.stream()
+                .filter(s -> s.charAt(0) == c)
+                .count();
+        return res;
+    }
+
+    public static int secondGrand(List<Integer> list) {
+        int res = list.stream()
+                .sorted((i1, i2) -> i2 - i1)
+                .skip(1)
+                .findFirst().get();
+        return res;
     }
 
     public static void main(String[] args) {
-        System.out.println(getRollingAverage(new ArrayList<>(Arrays.asList(1, 2, 3, 5)), 2));
+        System.out.println(deleteDuplicates(List.of(1, 2, 3, 3, 4, 1, 5)));
+        System.out.println(count(List.of("apple", "bat", "circle", "ball"), 'b'));
+        System.out.println(secondGrand(List.of(1, 2, 8, 9, 6)));
     }
 
 }
